@@ -14,7 +14,7 @@ class Canvas extends React.Component {
     }
     
     componentDidMount = () => {
-        console.log("hello world?")
+
     }
 
     panel = () => {
