@@ -133,7 +133,7 @@ class Home extends React.Component<any, any> {
                 </a>
                 {this.state.materialsOpen &&
                   <div className={`border border-black w-full rounded absolute top-8 border-t-0 rounded-t-none transition-all duration-500 ease py-1 overflow-hidden ${this.state.materialsOpen ? "max-h-72" : "max-h-0"}`}>
-                    {this.state.materials.map((material) => (
+                    {this.state.materials.map((material: any) => (
                       <a key={material.name} onClick={(e) => this.selectMaterial(material.name, material.color)} className="flex px-2 py-1 items-center hover:cursor-pointer hover:bg-[#efefef]">
                         <div className="w-5 h-5 mr-2 rounded" style={{
                           backgroundColor: material.color
