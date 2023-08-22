@@ -6,8 +6,8 @@ const Canvas = dynamic(() => import('../components/canvas'), {
   ssr: false,
 });
 
-class Home extends React.Component {
-  constructor(props) {
+class Home extends React.Component<any, any> {
+  constructor(props: any) {
     super(props)
     this.state = {
       canvasColor: "#abcdef",
