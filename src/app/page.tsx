@@ -64,7 +64,7 @@ class Home extends React.Component<any, any> {
     })
   }
 
-  panelWidthChange = (width) => {
+  panelWidthChange = (width: any) => {
     if(Number.isInteger(parseInt(width))) {
       this.setState({panelWidth: width})
       console.log("valid")
@@ -72,7 +72,7 @@ class Home extends React.Component<any, any> {
       this.setState({panelWidth: ""})
     }
   }
-  panelHeightChange = (height) => {
+  panelHeightChange = (height: any) => {
     if(Number.isInteger(parseInt(height))) {
       this.setState({panelHeight: height})
       console.log("valid")
@@ -81,7 +81,7 @@ class Home extends React.Component<any, any> {
     }
   }
 
-  selectMaterial = (name, color) => {
+  selectMaterial = (name: string, color: string) => {
     console.log(name)
     this.setState({
       selectedMaterial: {
