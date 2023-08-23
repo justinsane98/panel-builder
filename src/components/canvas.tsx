@@ -1,11 +1,10 @@
 import React, { useState } from 'react';
-import { render } from 'react-dom';
 import { Stage, Layer, Rect, Text, Circle, Line } from 'react-konva';
-import Konva from 'konva';
-import { Container } from 'konva/lib/Container';
+import Grid from './grid';
+import Panel from './panel';
 
-class Canvas extends React.Component {
-    constructor(props) {
+class Canvas extends React.Component <any, any> {
+    constructor(props:any) {
         super(props)
         this.state = {
             panelOffset: 10,
@@ -16,66 +15,6 @@ class Canvas extends React.Component {
     componentDidMount = () => {
 
     }
-
-    panel = () => {
-     return (
-        <Layer>
-            <Rect
-                x={this.props.panelX}
-                y={this.props.panelY}
-                width={this.props.panelWidth}
-                height={this.props.panelHeight}
-                fill={this.props.panelColor}
-                // onClick={handleClick}
-                cornerRadius={5}
-                classNames="hover:cursor-pointer"
-                shadowEnabled={true}
-                shadowColor="#000000"
-                shadowBlur={8}
-                shadowOffsetX={2}
-                shadowOffsetY={2}
-                shadowOpacity={0.25}
-                stroke="#eeeeee"
-                strokeWidth={1}
-            />
-        </Layer>
-    );
-  }
-
-  grid = () => {
-    const grid = this.props.canvasWidth/25;
-    const gridWidth = this.props.canvasWidth;
-    const linesA = [];
-    const linesB = [];
-    
-    for (let i = 0; i < gridWidth / grid; i++) {
-        linesA.push(
-            <Line
-                key={"x" + i}
-                strokeWidth={.25}
-                stroke={"#ffffff"}
-                points={[i * grid, 0, i * grid, gridWidth]}
-            />
-            );
-
-        linesB.push(
-        <Line
-            key={"y" + i}
-            strokeWidth={0.25}
-            stroke={"#ffffff"}
-            points={[0, i * grid, gridWidth, i * grid]}
-        />
-        );
-    }
-
-    return (
-     <Layer>
-        {linesA}
-        {linesB}
-      </Layer>
-    )
-  }
-
 
 render() {
   return (
@@ -92,15 +31,14 @@ render() {
             />
         </Layer>
 
-        {this.panel()}
-        {this.props.panelFeatures.map((panelFeature)=> (
+        <Panel {...this.props} />
+        {this.props.panelFeatures.map((panelFeature: any)=> (
             <Layer key={panelFeature.id}>
                 {panelFeature.type === "circle" &&
                     <Circle
                         id={panelFeature.id}
                         radius={panelFeature.radius}
-                        // fill={panelFeature.fill}
-                        fill="red"
+                        fill={panelFeature.fill}
                         x={(this.props.canvasWidth - this.props.panelWidth)/2 + panelFeature.x}
                         y={(this.props.canvasWidth - this.props.panelWidth)/2 + panelFeature.y}
                         onDragStart={(e) => {
@@ -110,8 +48,8 @@ render() {
                             })
                         }}
                         onDragEnd={(e) => {
-                        let newX = Math.round(e.target.x() / (this.props.canvasWidth/25)) * (this.props.canvasWidth/25)
-                        let newY = Math.round(e.target.y() / (this.props.canvasWidth/25)) * (this.props.canvasWidth/25)
+                        let newX = Math.round(e.target.x() / (this.props.canvasWidth/this.props.gridSpacing)) * (this.props.canvasWidth/this.props.gridSpacing)
+                        let newY = Math.round(e.target.y() / (this.props.canvasWidth/this.props.gridSpacing)) * (this.props.canvasWidth/this.props.gridSpacing)
                         
                         //console.log(newX, newY)
 
@@ -124,6 +62,9 @@ render() {
                                 x: newX,
                                 y: newY
                             });
+                            panelFeature.x = newX - this.props.panelX
+                            panelFeature.y = newY - this.props.panelY
+                            this.props.updateFeature(panelFeature)
                             // SET X, Y on the feature
                         } else {
                             console.log("out of range!")
@@ -141,7 +82,7 @@ render() {
                 }
             </Layer>
         ))}
-        {this.grid()}
+        <Grid {...this.props}/>
     </Stage>
   )
 }}

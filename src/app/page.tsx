@@ -15,6 +15,7 @@ class Home extends React.Component<any, any> {
       canvasHeight: 600,
       panelWidth: 500,
       panelHeight: 300,
+      gridSpacing: 50,
       panelX: 0,
       panellY: 0,
       materials: [
@@ -39,7 +40,7 @@ class Home extends React.Component<any, any> {
         {
           id:"feature1",
           type: "circle",
-          radius: 10,
+          radius: 30,
           fill: this.state.canvasColor,
           x: 105,
           y: 105,
@@ -62,6 +63,14 @@ class Home extends React.Component<any, any> {
         }
       ]
     })
+  }
+
+  updateFeature = (updatedFeature: any) => {
+    const selectedFeatures = this.state.selectedFeatures
+    const updatedCoords = {x: updatedFeature.x, y: updatedFeature.y }
+    selectedFeatures.map((feature: any) => (feature.id === updatedFeature.id ? {...feature, ...updatedCoords} : feature))
+    this.setState({selectedFeatures: selectedFeatures})
+    console.log(updatedFeature)
   }
 
   panelWidthChange = (width: any) => {
@@ -150,17 +159,19 @@ class Home extends React.Component<any, any> {
       </div>
 
       <div className="w-full">
-        <div className="text-left border border-black rounded inline-block">
+        <div className="text-left border border-black rounded inline-block hover:cursor-pointer">
           <Canvas 
             canvasWidth={this.state.canvasWidth}
             canvasHeight={this.state.canvasHeight}
             canvasColor={this.state.canvasColor}
+            gridSpacing={this.state.gridSpacing}
             panelWidth={this.state.panelWidth}
             panelHeight={this.state.panelHeight}
             panelX={this.state.panelX}
             panelY={this.state.panelY}
             panelColor={this.state.selectedMaterial.color}
             panelFeatures={this.state.selectedFeatures}
+            updateFeature={this.updateFeature}
           />
         </div>
       </div>
