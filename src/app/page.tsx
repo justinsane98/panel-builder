@@ -119,16 +119,16 @@ class Home extends React.Component<any, any> {
     <main className="min-h-screen 1024px:flex items-start justify-start p-4 gap-2">
       <div className="grid text-left w-full">
         <h1 className="font-bold text-3xl mb-4">Panel Builder</h1>
-        <div className="flex flex-col gap-2 mb-4 1024px:mb-0">
+        <div className="flex 1024px:flex-col gap-2 mb-4 1024px:mb-0">
             <div>
               <div className="">Height <span className="text-xs">(mm)</span></div>
-              <input type="text" className="block border border-black w-full px-2 py-1 rounded" placeholder="" value={this.state.panelHeight} onFocus={(e) => e.target.select()} onChange={(e) => this.panelHeightChange(e.target.value)}/>
+              <input type="number" min="100" max="500" step="10" className="block border border-black w-full px-2 py-1 rounded" placeholder="" value={this.state.panelHeight} onFocus={(e) => e.target.select()} onChange={(e) => this.panelHeightChange(e.target.value)}/>
             </div>
             <div>
               <div className="">Width <span className="text-xs">(mm)</span></div>
-              <input type="text" className="block border border-black w-full px-2 py-1 rounded" placeholder="" value={this.state.panelWidth} onFocus={(e) => e.target.select()} onChange={(e) => this.panelWidthChange(e.target.value)}/>
+              <input type="number" min="100" max="500" step="10" className="block border border-black w-full px-2 py-1 rounded" placeholder="" value={this.state.panelWidth} onFocus={(e) => e.target.select()} onChange={(e) => this.panelWidthChange(e.target.value)}/>
             </div>
-            <div>
+            <div className="flex-1">
               <div className="">Material <span className="text-xs">(color)</span></div>
               {/* <input type="text" className="block border border-black w-full px-2 py-1 rounded" placeholder="" value={this.state.panelWidth} onFocus={(e) => e.target.select()} onChange={(e) => this.panelWidthChange(e.target.value)}/> */}
               <div className="relative">
@@ -141,7 +141,7 @@ class Home extends React.Component<any, any> {
                   <div className="flex-1">{this.state.selectedMaterial.name}</div>
                 </a>
                 {this.state.materialsOpen &&
-                  <div className={`border border-black w-full rounded absolute top-8 border-t-0 rounded-t-none transition-all duration-500 ease py-1 overflow-hidden ${this.state.materialsOpen ? "max-h-72" : "max-h-0"}`}>
+                  <div className={`border border-black w-full rounded absolute top-8 border-t-0 rounded-t-none transition-all duration-500 ease py-1 overflow-hidden bg-white z-10 ${this.state.materialsOpen ? "max-h-72" : "max-h-0"}`}>
                     {this.state.materials.map((material: any) => (
                       <a key={material.name} onClick={(e) => this.selectMaterial(material.name, material.color)} className="flex px-2 py-1 items-center hover:cursor-pointer hover:bg-[#efefef]">
                         <div className="w-5 h-5 mr-2 rounded" style={{
